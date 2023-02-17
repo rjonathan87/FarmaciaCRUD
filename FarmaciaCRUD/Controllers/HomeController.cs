@@ -10,6 +10,11 @@ namespace FarmaciaCRUD.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Message = "Lista de medicamentos disponibles";
+
+            // traer la lista de medicamentos
+
+
             return View();
         }
 

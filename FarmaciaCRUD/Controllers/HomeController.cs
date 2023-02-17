@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FarmaciaCRUD.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,21 +14,31 @@ namespace FarmaciaCRUD.Controllers
             ViewBag.Message = "Lista de medicamentos disponibles";
 
             // traer la lista de medicamentos
-
-
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            var lista = new MedicamentosService();
+            var listaMedicamentos = lista.ListaMedicamentos();
+            ViewBag.listaMedicamentos = listaMedicamentos;
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Formas()
         {
-            ViewBag.Message = "Your contact page.";
+            var lista = new FormaService();
+            var listaFormas = lista.ListaFormas();
+            ViewBag.listaFormas = listaFormas;
+            return View();
+        }
+
+        public ActionResult Users()
+        {
+            var lista = new UsuariosService();
+            var listaUsuarios = lista.ListaUsuarios();
+            ViewBag.listaUsuarios = listaUsuarios;
+            return View();
+        }
+
+        public ActionResult Editar()
+        {
 
             return View();
         }

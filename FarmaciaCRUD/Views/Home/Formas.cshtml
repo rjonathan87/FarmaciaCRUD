@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Lista Formas Farmacéuticas";
+}
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+
+@if (ViewBag.listaFormas.Count > 0)
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forma in ViewBag.listaFormas)
+            {
+                <tr>
+                    <td>@forma.IdFormaFarmaceutica</td>
+                    <td>@forma.Nombre</td>
+                    <td>@if (forma.BHabilitado == 1)
+                    {
+                        <p>Habilitado</p>
+                    } else {
+                        <p>No Habilitado</p>
+                    }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

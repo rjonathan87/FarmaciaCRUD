@@ -37,10 +37,24 @@ namespace FarmaciaCRUD.Controllers
             return View();
         }
 
-        public ActionResult Editar()
+        public ActionResult Editar(string IdMedicamento)
         {
+            // lista formas
+            var lista = new FormaService();
+            var listaFormas = lista.ListaFormas();
+            ViewBag.listaFormas = listaFormas;
+
+            // recuperar el Medicamento por su id para ponerlo en el formulario
+            var servicioMedicamentos = new MedicamentosService();
+            var medicamento = servicioMedicamentos.BuscarMedicamento(IdMedicamento);
+            ViewBag.Medicamento = medicamento;
 
             return View();
+        }
+        public ActionResult Guardar()
+        {
+
+            return Redirect("/Home/Index");
         }
     }
 }

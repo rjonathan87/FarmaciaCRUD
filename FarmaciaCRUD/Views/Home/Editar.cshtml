@@ -10,13 +10,14 @@
         <div class="col col-md-6">
             <div class="form-group">
                 <label for="IdMedicamento">Id</label>
-                <input type="text"
+                <input type="number"
                        class="form-control"
                        id="IdMedicamento"
                        name="IdMedicamento"
                        placeholder="Id"
-                       disabled 
+                       readonly
                        value="@ViewBag.Medicamento.IdMedicamento"
+                       required
                        />
             </div>
         </div>
@@ -29,6 +30,7 @@
                        name="Nombre"
                        placeholder="Nombre Medicamento" 
                        value="@ViewBag.Medicamento.Nombre"
+                       required
                        />
             </div>
         </div>
@@ -41,19 +43,25 @@
                        name="Concentracion"
                        placeholder="Concentración" 
                        value="@ViewBag.Medicamento.Concentracion"
+                       required
                        />
             </div>
         </div>
         <div class="col col-md-6">
             <div class="form-group">
                 <label for="IdFormaFarmaceutica">Forma Farmacéutica</label>
-                <select class="form-control">
+                <select 
+                        class="form-control" 
+                        name="IdFormaFarmaceutica" 
+                        id="IdFormaFarmaceutica"
+                        required
+                        >
                     <option value="">-- Seleccione --</option>
                     @foreach (var forma in ViewBag.listaFormas)
                     {
                         <option 
                                 value="@forma.IdFormaFarmaceutica" 
-                                @(forma.IdFormaFarmaceutica == ViewBag.Medicamento.IdFormaFarmaceutica ? "selected" : "")
+                                    @( forma.IdFormaFarmaceutica == ViewBag.Medicamento.IdFormaFarmaceutica ? "selected" : "")
                                 >@forma.Nombre</option>
                     }
                 </select>
@@ -69,6 +77,8 @@
                        placeholder="Precio" 
                        min="0"
                        step="0.01"
+                       value="@ViewBag.Medicamento.Precio"
+                       required
                 />
             </div>
         </div>
@@ -82,6 +92,8 @@
                        placeholder="Stock" 
                        min="0"
                        step="1"
+                       value="@ViewBag.Medicamento.Stock"
+                       required
                 />
             </div>
         </div>
@@ -93,16 +105,26 @@
                        id="Presentacion"
                        name="Presentacion"
                        placeholder="Presentacion" 
+                       value="@ViewBag.Medicamento.Presentacion"
+                       required
                 />
             </div>
         </div>
         <div class="col col-md-6">
             <div class="form-group">
                 <label for="BHabilitado">Habilitado</label>
-                <select class="form-control">
+                <select class="form-control"
+                        id="BHabilitado"
+                        name="BHabilitado"
+                        required
+                >
                     <option value="">-- Seleccione --</option>
-                    <option value="1">Habilitado</option>
-                    <option value="0">No habilitado</option>
+                    <option value="1" 
+                            @((int)ViewBag.Medicamento.BHabilitado == 1 ? "selected" : "")
+                            >Habilitado</option>
+                    <option value="0"
+                            @((int)ViewBag.Medicamento.BHabilitado == 0 ? "selected" : "")
+                            >No habilitado</option>
                 </select>
             </div>
         </div>
@@ -115,6 +137,6 @@
     </div>
 </form>
 
-<div>
+<div style="margin-top: 10px;">
     @Html.ActionLink("Ir a la lista", "Index")
 </div>

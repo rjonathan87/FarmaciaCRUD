@@ -1,4 +1,5 @@
-﻿using FarmaciaCRUD.Services;
+﻿using FarmaciaCRUD.Models;
+using FarmaciaCRUD.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,8 +52,41 @@ namespace FarmaciaCRUD.Controllers
 
             return View();
         }
-        public ActionResult Guardar()
+        [HttpPost]
+        public ActionResult Guardar(
+            int IdMedicamento,
+            string Nombre,
+            string Concentracion,
+            int IdFormaFarmaceutica,
+            float Precio,
+            int Stock,
+            string Presentacion,
+            int BHabilitado
+        )
         {
+            Medicamento medicamentoPOST = new Medicamento();
+            medicamentoPOST.IdMedicamento = IdMedicamento;
+            medicamentoPOST.Nombre = Nombre;
+            medicamentoPOST.Concentracion = Concentracion;
+            medicamentoPOST.IdFormaFarmaceutica = IdFormaFarmaceutica;
+            medicamentoPOST.Precio = Precio;
+            medicamentoPOST.Stock = Stock;
+            medicamentoPOST.Presentacion = Presentacion;
+            medicamentoPOST.BHabilitado = BHabilitado;
+
+            // recuperar la línea que coincide con el id del registro enviado
+            var servicioMedicamentos = new MedicamentosService();
+            servicioMedicamentos.GuardarMedicamento(medicamentoPOST, IdMedicamento);
+
+
+            return Redirect("/Home/Index");
+        }
+        public ActionResult Eliminar(int IdMedicamento)
+        {
+            // recuperar la línea que coincide con el id del registro enviado
+            var servicioMedicamentos = new MedicamentosService();
+            servicioMedicamentos.EliminarMedicamento(IdMedicamento);
+
 
             return Redirect("/Home/Index");
         }

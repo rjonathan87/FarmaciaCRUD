@@ -16,29 +16,32 @@ namespace FarmaciaCRUD.Services
         public List<Medicamento> ListaMedicamentos()
         {
             
-            string[] lines = File.ReadAllLines(dataFile);
+            var lines = File.ReadAllLines(dataFile);
 
             var listado = new List<Medicamento>();
 
             foreach (string line in lines)
             {
-                var lineArray = line.Split('|');
-
-                // objeto para usuario encontrado
-                var medicamento = new Medicamento();
-
-                if(lineArray[0] != "IIDMEDICAMENTO")
+                if(line != "")
                 {
-                    medicamento.IdMedicamento = int.Parse(lineArray[0]);
-                    medicamento.Nombre = lineArray[1];
-                    medicamento.Concentracion = lineArray[2];
-                    medicamento.IdFormaFarmaceutica = int.Parse(lineArray[3]);
-                    medicamento.Precio = float.Parse(lineArray[4]);
-                    medicamento.Stock = int.Parse(lineArray[5]);
-                    medicamento.Presentacion = lineArray[6];
-                    medicamento.BHabilitado = int.Parse(lineArray[7]);
+                    var lineArray = line.Split('|');
 
-                    listado.Add(medicamento);
+                    // objeto para usuario encontrado
+                    var medicamento = new Medicamento();
+
+                    if(lineArray[0] != "IIDMEDICAMENTO")
+                    {
+                        medicamento.IdMedicamento = int.Parse(lineArray[0]);
+                        medicamento.Nombre = lineArray[1];
+                        medicamento.Concentracion = lineArray[2];
+                        medicamento.IdFormaFarmaceutica = int.Parse(lineArray[3]);
+                        medicamento.Precio = float.Parse(lineArray[4]);
+                        medicamento.Stock = int.Parse(lineArray[5]);
+                        medicamento.Presentacion = lineArray[6];
+                        medicamento.BHabilitado = int.Parse(lineArray[7]);
+                        
+                        listado.Add(medicamento);
+                    }
                 }
             }
             return listado;
@@ -69,6 +72,86 @@ namespace FarmaciaCRUD.Services
                 }
             }
             return null;
+        }
+        public void GuardarMedicamento(Medicamento medicamento, int IdMedicamento)
+        {
+            string[] lines = File.ReadAllLines(dataFile);
+            int index = 0;
+
+            foreach (string line in lines)
+            {
+                var linea = line;
+                var lineArray = line.Split('|');
+
+                // objeto para medicamento encontrado
+                if (lineArray[0] != "IIDMEDICAMENTO")
+                {
+                    if (int.Parse(lineArray[0]) == IdMedicamento)
+                    {
+                        // se encuentra la línea que se reemplaza
+                        linea = medicamento.IdMedicamento + "|" +
+                        medicamento.Nombre + "|" +
+                        medicamento.Concentracion + "|" +
+                        medicamento.IdFormaFarmaceutica + "|" +
+                        medicamento.Precio + "|" +
+                        medicamento.Stock + "|" +
+                        medicamento.Presentacion + "|" +
+                        medicamento.BHabilitado;
+                        lines[index] = linea;
+                    }
+                    else
+                    {
+                        lines[index] = line;
+                    }
+                }
+
+                index++;
+            }
+
+            // se escriben los datos en el archivo
+            using (StreamWriter outputFile = new StreamWriter(dataFile))
+            {
+                foreach (string line in lines)
+                    outputFile.WriteLine(line);
+            }
+        }
+        public void EliminarMedicamento(int IdMedicamento)
+        {
+            string[] lines = File.ReadAllLines(dataFile);
+            int index = 0;
+
+            foreach (string line in lines)
+            {
+                if(index > 0)
+                {
+                    var lineArray = line.Split('|');
+
+                    // objeto para medicamento encontrado
+                    if (lineArray[0] != "")
+                    {
+                        if (int.Parse(lineArray[0]) == IdMedicamento)
+                        {
+                            if (int.Parse(lineArray[0]) != IdMedicamento)
+                            {
+                                lines[index] = line;
+                            }
+                            else {
+                                lines[index] = "";
+                            }
+                        }
+                    }
+                }
+                index++;
+            }
+            // se escriben los datos en el archivo
+            using (StreamWriter outputFile = new StreamWriter(dataFile))
+            {
+                foreach (string line in lines)
+                {
+                    if(line != "")
+                        outputFile.WriteLine(line);
+                }
+            }
         }
     }
 }

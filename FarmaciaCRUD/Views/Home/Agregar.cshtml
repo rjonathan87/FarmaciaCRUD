@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Agregar Medicamentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Home/Nuevo" method="post">
+    <div class="row">
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="Nombre">Nombre Medicamento</label>
+                <input type="text"
+                       class="form-control"
+                       id="Nombre"
+                       name="Nombre"
+                       placeholder="Nombre Medicamento"
+                       required />
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="Concentracion">Concentración</label>
+                <input type="text"
+                       class="form-control"
+                       id="Concentracion"
+                       name="Concentracion"
+                       placeholder="Concentración"
+                       required />
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="IdFormaFarmaceutica">Forma Farmacéutica</label>
+                <select class="form-control"
+                        name="IdFormaFarmaceutica"
+                        id="IdFormaFarmaceutica"
+                        required>
+                    <option value="">-- Seleccione --</option>
+                    @foreach (var forma in ViewBag.listaFormas)
+                    {
+                        <option value="@forma.IdFormaFarmaceutica" >@forma.Nombre</option>
+                        }
+                </select>
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="Precio">Precio</label>
+                <input type="number"
+                       class="form-control"
+                       id="Precio"
+                       name="Precio"
+                       placeholder="Precio"
+                       min="0"
+                       step="0.01"
+                       required />
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="Stock">Stock</label>
+                <input type="number"
+                       class="form-control"
+                       id="Stock"
+                       name="Stock"
+                       placeholder="Stock"
+                       min="0"
+                       step="1"
+                       required />
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="Presentacion">Presentacion</label>
+                <input type="text"
+                       class="form-control"
+                       id="Presentacion"
+                       name="Presentacion"
+                       placeholder="Presentacion"
+                       required />
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="BHabilitado">Habilitado</label>
+                <select class="form-control"
+                        id="BHabilitado"
+                        name="BHabilitado"
+                        required>
+                    <option value="">-- Seleccione --</option>
+                    <option value="1">
+                        Habilitado
+                    </option>
+                    <option value="0">
+                        No habilitado
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <button type="submit"
+                    class="btn btn-success btn-block">
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>
+
+<div style="margin-top: 10px;">
+    @Html.ActionLink("Cancelar", "Index")
+</div>

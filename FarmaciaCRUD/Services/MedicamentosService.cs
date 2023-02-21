@@ -13,6 +13,40 @@ namespace FarmaciaCRUD.Services
     {
         protected string dataFile = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/Medicamentos.txt");
 
+        public void NuevoMedicamento(Medicamento medicamento)
+        {
+            // buscar el id max de la lista
+            var lines = File.ReadAllLines(dataFile);
+            var lista = ListaMedicamentos();
+
+            List<int> Ids = new List<int>();
+            var index = 0;
+
+            // array con todos los IDS
+            foreach (string line in lines)
+            {
+                var lineArray = line.Split('|');
+
+                if (lineArray[0] != "IIDMEDICAMENTO")
+                {
+                    Ids.Add( int.Parse(lineArray[0]));
+                }
+
+                index++;
+            }
+
+            var IdNuevo = Ids.Max() + 1;
+            medicamento.IdMedicamento = IdNuevo;
+            var nuevaLinea = "";
+            nuevaLinea = medicamento.IdMedicamento + "|" + medicamento.Nombre + "|" + medicamento.Concentracion + "|" + medicamento.IdFormaFarmaceutica + "|" + medicamento.Precio + "|" + medicamento.Stock + "|" + medicamento.Presentacion + "|" + medicamento.BHabilitado;
+
+            // se escriben los datos en el archivo
+            StreamWriter sw = new StreamWriter(dataFile, true);
+            sw.WriteLine(nuevaLinea);
+
+            sw.Close();
+        }
+
         public List<Medicamento> ListaMedicamentos()
         {
             
@@ -46,7 +80,6 @@ namespace FarmaciaCRUD.Services
             }
             return listado;
         }
-
         public Medicamento BuscarMedicamento(string IdMedicamento)
         {
             string[] lines = File.ReadAllLines(dataFile);

@@ -11,6 +11,16 @@
     <table class="table table-striped table-hover" id="tblMedicamentos">
         <thead>
             <tr>
+                <td colspan="2"></td>
+                <td class="pull-right">
+                    <button type="button"
+                            class="btn btn-success"
+                            onclick="location.href='@Url.Action( "Agregar","Home")'; return false;">
+                        Agregar
+                    </button>
+                </td>
+            </tr>
+            <tr>
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Acciones</th>
@@ -22,7 +32,7 @@
                 <tr>
                     <td>@medicamento.IdMedicamento</td>
                     <td>@medicamento.Nombre</td>
-                    <td>
+                    <td class="text-center">
                         <button 
                                 type="button" 
                                 class="btn btn-info"

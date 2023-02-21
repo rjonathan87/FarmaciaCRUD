@@ -182,6 +182,7 @@
     <Content Include="Views\Home\Editar.cshtml" />
     <Content Include="Views\Home\Formas.cshtml" />
     <Content Include="Views\Home\Users.cshtml" />
+    <Content Include="Views\Home\Agregar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

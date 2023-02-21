@@ -7,7 +7,7 @@ namespace FarmaciaCRUD.Models
 {
     public class Medicamento
     {
-        public int IdMedicamento { get; set; }
+        public int? IdMedicamento { get; set; }
         public string Nombre { get; set; }
         public string Concentracion { get; set; }
         public int IdFormaFarmaceutica { get; set; }

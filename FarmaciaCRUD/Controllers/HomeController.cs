@@ -52,6 +52,42 @@ namespace FarmaciaCRUD.Controllers
 
             return View();
         }
+        public ActionResult Agregar()
+        {
+            // lista formas
+            var lista = new FormaService();
+            var listaFormas = lista.ListaFormas();
+            ViewBag.listaFormas = listaFormas;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Nuevo(
+                string Nombre,
+                string Concentracion,
+                int IdFormaFarmaceutica,
+                float Precio,
+                int Stock,
+                string Presentacion,
+                int BHabilitado
+            )
+        {
+            var nuevoMedicamento = new Medicamento();
+            nuevoMedicamento.Nombre = Nombre;
+            nuevoMedicamento.Concentracion = Concentracion;
+            nuevoMedicamento.IdFormaFarmaceutica = IdFormaFarmaceutica;
+            nuevoMedicamento.Precio = Precio;
+            nuevoMedicamento.Stock = Stock;
+            nuevoMedicamento.Presentacion = Presentacion;
+            nuevoMedicamento.BHabilitado = BHabilitado;
+
+            var medicamento = new MedicamentosService();
+            medicamento.NuevoMedicamento(nuevoMedicamento);
+
+            return Redirect("/Home/Index");
+        }
+
         [HttpPost]
         public ActionResult Guardar(
             int IdMedicamento,
